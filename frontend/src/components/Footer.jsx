@@ -16,7 +16,7 @@ const Footer = () => {
                 src="/logo.png" 
                 alt="SiteGet Logo" 
                 className="h-8 w-8"
-                loading="lazy"
+                style={{ imageRendering: 'crisp-edges' }}
               />
               <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
                 SiteGet
