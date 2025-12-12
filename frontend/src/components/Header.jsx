@@ -30,7 +30,7 @@ const Header = () => {
               src="/logo.png" 
               alt="SiteGet Logo" 
               className="h-10 w-10"
-              loading="lazy"
+              style={{ imageRendering: 'crisp-edges' }}
             />
             <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
               SiteGet
