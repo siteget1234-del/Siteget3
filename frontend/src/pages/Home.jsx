@@ -77,7 +77,7 @@ const Home = () => {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => window.location.href = 'tel:+917385311748'}
+                onClick={() => window.location.href = 'tel:+919067551748'}
                 className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg w-full sm:w-auto shadow-premium hover:shadow-premium-lg transition-all duration-300"
                 data-testid="hero-call-button"
               >
