@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, MessageCircle, MapPin, Clock, Mail } from 'lucide-react';
+import { Phone, MessageCircle, Clock, Mail } from 'lucide-react';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 
@@ -20,6 +20,14 @@ const Contact = () => {
       action: 'Chat on WhatsApp',
       link: 'https://wa.me/917385311748?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services%20for%20my%20business',
       details: ['Available on both numbers']
+    },
+    {
+      icon: <Mail className="h-10 w-10 text-blue-600" />,
+      title: 'Email',
+      description: 'Send us your queries via email',
+      action: 'Send Email',
+      link: 'mailto:siteget1234@gmail.com',
+      details: ['siteget1234@gmail.com']
     }
   ];
 
@@ -53,13 +61,13 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-white py-20">
+      <section className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              Get in <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Touch</span>
+          <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6" data-testid="contact-heading">
+              Get in <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">Touch</span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600">
+            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
               Ready to take your business online? Contact us today and let's start building your digital presence.
             </p>
           </div>
@@ -69,11 +77,16 @@ const Contact = () => {
       {/* Contact Methods */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {contactMethods.map((method, index) => (
-              <Card key={index} className="border-2 hover:border-blue-600 transition-all hover:shadow-lg">
+              <Card 
+                key={index} 
+                className="border-2 hover:border-blue-600 transition-all duration-300 card-hover shadow-premium animate-fade-in-scale"
+                style={{ animationDelay: `${index * 0.15}s` }}
+                data-testid={`contact-method-${index}`}
+              >
                 <CardContent className="p-8 text-center">
-                  <div className="flex justify-center mb-4">{method.icon}</div>
+                  <div className="flex justify-center mb-4 transform transition-transform duration-300 hover:scale-110">{method.icon}</div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                     {method.title}
                   </h3>
@@ -92,11 +105,12 @@ const Contact = () => {
                         window.location.href = method.link;
                       }
                     }}
-                    className={`w-full ${
+                    className={`w-full shadow-premium hover:shadow-premium-lg transition-all duration-300 ${
                       method.title === 'WhatsApp'
-                        ? 'bg-green-600 hover:bg-green-700 text-white'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                        ? 'bg-green-600 hover:bg-green-700 text-white btn-premium'
+                        : 'bg-blue-600 hover:bg-blue-700 text-white btn-premium'
                     }`}
+                    data-testid={`contact-${method.title.toLowerCase().replace(' ', '-')}-button`}
                   >
                     {method.action}
                   </Button>
@@ -110,15 +124,15 @@ const Contact = () => {
       {/* Business Hours */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <Card className="border-2">
+          <div className="max-w-3xl mx-auto animate-fade-in">
+            <Card className="border-2 shadow-premium-lg">
               <CardContent className="p-8">
                 <div className="flex items-center space-x-4 mb-6">
                   <Clock className="h-10 w-10 text-blue-600" />
-                  <h2 className="text-2xl font-bold text-gray-900">Availability</h2>
+                  <h2 className="text-2xl font-bold text-gray-900" data-testid="availability-heading">Availability</h2>
                 </div>
                 <div className="space-y-3">
-                  <p className="text-gray-600 text-lg">
+                  <p className="text-gray-600 text-lg leading-relaxed">
                     We're available to help you Monday through Saturday. Contact us anytime, and we'll respond as quickly as possible.
                   </p>
                   <p className="text-gray-700 font-medium">
@@ -126,6 +140,9 @@ const Contact = () => {
                   </p>
                   <p className="text-gray-700 font-medium">
                     Phone calls: During business hours
+                  </p>
+                  <p className="text-gray-700 font-medium">
+                    Email responses: Within 24 hours
                   </p>
                 </div>
               </CardContent>
@@ -138,8 +155,8 @@ const Contact = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" data-testid="faq-heading">
                 Frequently Asked Questions
               </h2>
               <p className="text-lg text-gray-600">
@@ -148,7 +165,12 @@ const Contact = () => {
             </div>
             <div className="space-y-6">
               {faqs.map((faq, index) => (
-                <Card key={index} className="border-2">
+                <Card 
+                  key={index} 
+                  className="border-2 shadow-premium hover:shadow-premium-lg transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  data-testid={`faq-item-${index}`}
+                >
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
                       {faq.question}
@@ -163,19 +185,20 @@ const Contact = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white shadow-premium-xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6" data-testid="contact-cta-heading">
               Let's Build Something Great Together
             </h2>
-            <p className="text-lg text-blue-100 mb-8">
+            <p className="text-lg text-blue-100 mb-8 leading-relaxed">
               Your journey to digital success starts with a simple conversation. Reach out today!
             </p>
             <Button
               size="lg"
               onClick={() => window.open('https://wa.me/917385311748?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services%20for%20my%20business', '_blank')}
-              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg"
+              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg shadow-premium-lg hover:shadow-premium-xl transition-all duration-300 btn-premium"
+              data-testid="contact-cta-button"
             >
               Start Conversation
             </Button>
