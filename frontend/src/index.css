@@ -35,11 +35,21 @@ html {
     outline-offset: 2px;
 }
 
-/* Better image loading */
+/* Sharp rendering for logos and images */
 img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+/* Ensure logos are always sharp */
+img[alt*="Logo"],
+img[src*="logo"] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
 
 @layer base {
