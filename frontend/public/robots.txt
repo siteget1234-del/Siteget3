@@ -1,4 +1,12 @@
+# robots.txt for SiteGet
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
 
-Sitemap: https://siteget.com/sitemap.xml
+# Sitemap location
+Sitemap: https://siteget-digital.preview.emergentagent.com/sitemap.xml
+
+# Disallow admin or private areas (if any in future)
+# Disallow: /admin/
+# Disallow: /private/
