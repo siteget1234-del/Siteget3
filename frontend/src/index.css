@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     margin: 0;
     font-family:
@@ -10,11 +15,31 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga" 1, "calt" 1;
 }
 
 code {
     font-family:
         source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus visible for better accessibility */
+*:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Better image loading */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 @layer base {
