@@ -1,0 +1,26 @@
+{
+  "short_name": "SiteGet",
+  "name": "SiteGet - Empowering Rural Businesses",
+  "description": "Professional, affordable websites and e-commerce solutions for rural businesses",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "40x40",
+      "type": "image/png"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff"
+}
