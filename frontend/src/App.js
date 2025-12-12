@@ -3,22 +3,11 @@ import './App.css';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SEO from './components/SEO';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
-
-// SEO Component to update page title and meta tags
-const SEO = ({ title, description }) => {
-  useEffect(() => {
-    document.title = title;
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', description);
-    }
-  }, [title, description]);
-  return null;
-};
 
 // Scroll to top on route change
 const ScrollToTop = () => {
