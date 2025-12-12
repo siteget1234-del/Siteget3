@@ -50,21 +50,26 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 sm:py-28">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 sm:py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Empowering <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Rural Businesses</span> to Go Digital
+            <h1 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight animate-fade-in-up"
+              data-testid="hero-heading"
+            >
+              Empowering <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">Rural Businesses</span> to Go Digital
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-up animate-delay-200">
               High-quality, affordable websites and web applications with complete setup. 
               We handle everything from hosting to deployment so you can focus on your business.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animate-delay-300">
               <Button
                 size="lg"
                 onClick={() => window.open('https://wa.me/917385311748?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services%20for%20my%20business', '_blank')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg w-full sm:w-auto"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg w-full sm:w-auto shadow-premium-lg hover:shadow-premium-xl transition-all duration-300 btn-premium"
+                data-testid="hero-whatsapp-button"
               >
                 Get Started on WhatsApp
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -73,7 +78,8 @@ const Home = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => window.location.href = 'tel:+917385311748'}
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg w-full sm:w-auto"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg w-full sm:w-auto shadow-premium hover:shadow-premium-lg transition-all duration-300"
+                data-testid="hero-call-button"
               >
                 Call Us Now
               </Button>
@@ -85,8 +91,8 @@ const Home = () => {
       {/* Features Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" data-testid="features-heading">
               Everything You Need to Succeed Online
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -95,13 +101,18 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="border-2 hover:border-blue-600 transition-all hover:shadow-lg">
+              <Card 
+                key={index} 
+                className="border-2 hover:border-blue-600 transition-all duration-300 card-hover shadow-premium animate-fade-in-scale"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                data-testid={`feature-card-${index}`}
+              >
                 <CardContent className="p-6">
-                  <div className="mb-4">{feature.icon}</div>
+                  <div className="mb-4 transform transition-transform duration-300 hover:scale-110">{feature.icon}</div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -110,11 +121,11 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white shadow-premium-xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4" data-testid="benefits-heading">
                 Why Choose SiteGet?
               </h2>
               <p className="text-lg text-blue-100">
@@ -123,9 +134,14 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start space-x-3">
+                <div 
+                  key={index} 
+                  className="flex items-start space-x-3 animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  data-testid={`benefit-item-${index}`}
+                >
                   <CheckCircle className="h-6 w-6 text-blue-300 flex-shrink-0 mt-1" />
-                  <p className="text-lg text-blue-50">{benefit}</p>
+                  <p className="text-lg text-blue-50 leading-relaxed">{benefit}</p>
                 </div>
               ))}
             </div>
@@ -136,18 +152,19 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" data-testid="cta-heading">
               Ready to Take Your Business Online?
             </h2>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               Join hundreds of rural businesses already thriving online. Let's build your digital presence together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
                 onClick={() => window.open('https://wa.me/917385311748?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services%20for%20my%20business', '_blank')}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg shadow-premium-lg hover:shadow-premium-xl transition-all duration-300 btn-premium"
+                data-testid="cta-whatsapp-button"
               >
                 Chat on WhatsApp
               </Button>
@@ -155,9 +172,9 @@ const Home = () => {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg shadow-premium hover:shadow-premium-lg transition-all duration-300"
               >
-                <Link to="/services">View Our Services</Link>
+                <Link to="/services" data-testid="cta-services-link">View Our Services</Link>
               </Button>
             </div>
           </div>
