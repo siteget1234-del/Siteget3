@@ -11,8 +11,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              SiteGet
+            <div className="flex items-center space-x-3 mb-4">
+              <img 
+                src="/logo.png" 
+                alt="SiteGet Logo" 
+                className="h-8 w-8"
+              />
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                SiteGet
+              </div>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               Empowering rural businesses to go online with affordable, professional websites and complete digital solutions.
