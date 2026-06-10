@@ -1,0 +1,118 @@
+import express from "express";
+import path from "path";
+import fs from "fs";
+import { createServer as createViteServer } from "vite";
+
+const app = express();
+const PORT = 3000;
+
+async function startServer() {
+  let vite: any = null;
+  
+  if (process.env.NODE_ENV !== "production") {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: "custom",
+    });
+    app.use(vite.middlewares);
+  } else {
+    // In production, serve static files from dist first, EXCEPT index.html
+    const distPath = path.join(process.cwd(), 'dist');
+    app.use(express.static(distPath, { index: false }));
+  }
+
+  // Intercept HTML requests to inject Open Graph tags
+  app.get("*", async (req, res, next) => {
+    // Skip explicit API routes
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    
+    // Quick heuristic: Only inject HTML for requests that accept 'text/html'
+    const accept = req.headers.accept || '';
+    if (!accept.includes('text/html')) {
+        return next();
+    }
+
+    try {
+      let template = '';
+      if (process.env.NODE_ENV !== "production") {
+        template = fs.readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(req.originalUrl, template);
+      } else {
+        const indexPath = path.resolve(process.cwd(), 'dist/index.html');
+        if (fs.existsSync(indexPath)) {
+           template = fs.readFileSync(indexPath, 'utf-8');
+        } else {
+           return res.status(404).send('Not Found');
+        }
+      }
+
+      const articleId = req.query.article as string;
+      let title = "देशाचे लोक";
+      let description = "सत्यशोधक व पारदर्शक पत्रकारिता";
+      let image = "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"; // Default nice newspaper image
+      const url = `https://siteget.in${req.originalUrl}`;
+
+      // Fetch dynamic OG tags from Firestore REST API if an article is in the URL
+      if (articleId) {
+         try {
+            // Check if user set Firebase explicitly in local env, else try to use process.env
+            const projectId = process.env.VITE_FIREBASE_PROJECT_ID; 
+            if (projectId) {
+               const docUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/articles/${articleId}`;
+               const response = await fetch(docUrl);
+               
+               if (response.ok) {
+                   const data = await response.json();
+                   if (data.fields) {
+                       if (data.fields.title && data.fields.title.stringValue) {
+                           title = data.fields.title.stringValue + " | देशाचे लोक";
+                       }
+                       if (data.fields.summary && data.fields.summary.stringValue) {
+                           description = data.fields.summary.stringValue;
+                       }
+                       
+                       // Try imageUrl if available, otherwise just use default
+                       if (data.fields.imageUrl && data.fields.imageUrl.stringValue) {
+                           image = data.fields.imageUrl.stringValue;
+                       }
+                   }
+               }
+            }
+         } catch(e) { 
+            console.error("Error fetching article for OG", e); 
+         }
+      }
+
+      // Prepare metadata block
+      const ogTags = `
+        <meta property="og:title" content="${title.replace(/"/g, '&quot;')}" />
+        <meta property="og:description" content="${description.replace(/"/g, '&quot;')}" />
+        <meta property="og:image" content="${image.replace(/"/g, '&quot;')}" />
+        <meta property="og:url" content="${url}" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}" />
+        <meta name="twitter:description" content="${description.replace(/"/g, '&quot;')}" />
+        <meta name="twitter:image" content="${image.replace(/"/g, '&quot;')}" />
+        <title>${title.replace(/"/g, '&quot;')}</title>
+      `;
+
+      // Inject dynamically replacing </head>
+      const html = template.replace('</head>', `${ogTags}\n</head>`);
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+
+    } catch (e) {
+      if (vite) vite.ssrFixStacktrace(e);
+      console.error(e);
+      res.status(500).end(e instanceof Error ? e.message : String(e));
+    }
+  });
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+startServer();
